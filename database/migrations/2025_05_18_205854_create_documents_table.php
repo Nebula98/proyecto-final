@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('programs', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');         // Relación con users
+            $table->foreignId('projection_id')->nullable()->constrained('projections'); // Opcional
             $table->string('name');
-            $table->text('description');
-            $table->boolean('active')->default(true);
+            $table->string('path');
+            $table->integer('version');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('programs');
+        Schema::dropIfExists('documents');
     }
 };
