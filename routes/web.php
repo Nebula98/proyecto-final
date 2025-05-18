@@ -4,6 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController; //luis
+use App\Http\Controllers\ProgramController; //Luis
+use App\Http\Controllers\CourseController;//Luis
+use App\Http\Controllers\GroupController;//Luis
+use App\Http\Controllers\DocumentController;//Luis
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +40,32 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Inertia 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/users/create', function () {
+        return Inertia::render('Users/Create');
+    })->name('users.create');
+
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+});
+
 require __DIR__.'/auth.php';
+
+// //Luis */
+
+// Route::middleware(['auth', 'role:admin'])->group(function () {
+//     // Usuarios
+//     Route::resource('users', UserController::class);
+
+//     // Programas
+//     Route::resource('programs', ProgramController::class);
+
+//     // Cursos
+//     Route::resource('courses', CourseController::class);
+
+//     // Grupos
+//     Route::resource('groups', GroupController::class);
+
+//     // Documentos
+//     Route::resource('documents', DocumentController::class);
+// });
